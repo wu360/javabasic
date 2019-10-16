@@ -1,4 +1,4 @@
-package com.example.basic;
+package com.example.basic.thread;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

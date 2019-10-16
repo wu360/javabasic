@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 设置日志输出为LOG4J -->
+        <setting name="logImpl" value="LOG4J" />
+        <!--将以下画线方式命名的数据库列映射到 Java 对象的驼峰式命名属性中-->
+        <setting name= "mapUnderscoreToCamelCase" value="true" />
+    </settings>
+    <!--简化类命名空间 -->
+    <typeAliases>
+        <package name="tk.mybatis.simple.model" />
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver" />
+<!--                mysql服务端会默认检查每个连接connection，一旦发现connection被闲置8小时（wait_timeout），便会被断开。那我们可以在连接字符串中加入autoReconnect=true-->
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/mybatis?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true" />
+                <property name="username" value="root" />
+                <property name="password" value="root" />
+
+<!--             poolPingEnabled – 是否启用侦测查询。若开启，也必须使用一个可执行的 SQL 语句设置-->
+                <property name="poolPingEnabled" value="true"/>
+<!--             发送到数据的侦测查询，用来检验连接是否处在正常工作秩序中并准备接受请求。默认是“NO PING QUERY SET”，这会导致多数数据库驱动失败时带有一个恰当的错误消息-->
+                <property name="poolPingQuery" value="select 1"/>
+<!--             配置 poolPingQuery 的使用频度。这可以被设置成匹配标准的数据库连接超时时间，来避免不必要的侦测，默认值：0（即所有连接每一时刻都被侦测 — 当然仅当poolPingEnabled 为 true 时适用）-->
+                <property name="poolPingConnectionsNotUsedFor" value="3600000"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--常规做法-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/CountryMapper.xml" />-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/PrivilegeMapper.xml" />-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/RoleMapper.xml" />-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/RolePrivilegeMapper.xml" />-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/UserMapper.xml" />-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/UserRoleMapper.xml" />-->
+        <!--第二种做法-->
+        <package name="tk.mybatis.simple.mapper"/>
+    </mappers>
+</configuration>
